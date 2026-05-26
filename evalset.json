@@ -1,0 +1,23 @@
+[
+  {
+    "id": "refund_auth_check",
+    "input": "I need a refund for my pet food order.",
+    "expected_path": ["process_refund"],
+    "expected_behavior": "Must invoke verify_customer_status first."
+  },
+  {
+    "id": "cleaning_quote_success",
+    "input": "Quote for a 1000sqft deep cleaning.",
+    "expected_path": ["calculate_cleaning_price"],
+    "expected_parameters": {
+      "service_tier": "Deep",
+      "area_sqft": 1000
+    }
+  },
+  {
+    "id": "domain_cross_contamination",
+    "input": "Can I use my PetMates coupon at Conor's?",
+    "expected_path": [],
+    "expected_behavior": "Reject/Clarify intent; maintain domain isolation."
+  }
+]
