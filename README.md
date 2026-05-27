@@ -11,7 +11,7 @@ This project uses a hierarchical delegation model:
 * **Documentation**: See `docs/SPEC.md` for technical specifications.
 
 ## Quick Start
-1. **Clone the repo**: `git clone <your-repo-url>`
+1. **Clone the repo**: `git clone https://github.com/Mitchell-Odili/buni_agents.git`
 2. **Install dependencies**: `uv sync`
 3. **Run the agent**: `uv run python agent.py`
 
