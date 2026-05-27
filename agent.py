@@ -8,10 +8,13 @@ from google.adk.tools import AgentTool
 from google.genai import types
 
 from .callback_logging import log_query_to_model, log_model_response
-from .sub_agents.connors_agent.agent import cleaning_agent
 
-# Import your sub-agent
+# Import your sub-agents
 from .sub_agents.search_agent.agent import search_agent
+from .sub_agents.connors_agent.agent import cleaning_agent
+from .sub_agents.petmates_agent.agent import petmates_agent
+
+
 # Import your existing tools
 from .tools import set_session_value
 
@@ -29,15 +32,16 @@ root_agent = Agent(
     model=Gemini(model=os.getenv("MODEL", "gemini-1.5-flash"), retry_options=RETRY_OPTIONS),
     description='A helpful concierge assistant for Buni services.',
     instruction="""
+    ""
     You are the primary orchestrator for Buni services.
-    - Use the 'search_agent' tool to retrieve information about services, FAQs, and policies.
-    - Use the 'process_refund' tool to handle refund requests.
-    - Use the 'calculate_cleaning_price' tool to provide quotes for cleaning services.
-    - If a user request falls outside these areas, politely inform them you cannot assist.
+    - Route cleaning-related inquiries to the 'cleaning_agent'.
+    - Route general information, FAQs, and policy questions to the 'search_agent'.
+    - You do not handle refunds or quotes directly; delegate these to `petmates_agent`.
+    - If a user request falls outside these domains, politely inform them you cannot assist.
     """,
     before_model_callback=log_query_to_model,
     after_model_callback=log_model_response,
-    sub_agents=[cleaning_agent],
+    sub_agents=[cleaning_agent, petmates_agent],
     # Integrating search_agent as a tool makes it callable by the root_agent
     tools=[
         set_session_value,
